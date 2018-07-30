@@ -11,11 +11,9 @@
 |
 */
 
-Route::get('test', 'TestController@test');
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('articles','ArticleController');
 //Route::get('articles', 'ArticleController@index');

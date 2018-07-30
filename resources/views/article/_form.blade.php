@@ -1,6 +1,6 @@
 <div class="form-group row">
-    {!! Form::label('title','Title',['class'=>'col-md-4 col-form-label text-md-right']) !!}
-    <div class="col-md-6">
+    {!! Form::label('title','Title',['class'=>'col-md-2 col-form-label text-md-right']) !!}
+    <div class="col-md-10">
         {!! Form::text('title',null,['class'=>'form-control']) !!}
         @if ($errors->has('title'))
             <span class="text-danger" role="alert">
@@ -11,9 +11,9 @@
 </div>
 
 <div class="form-group row">
-    {!! Form::label('content','Content',['class'=>'col-md-4 col-form-label text-md-right']) !!}
+    {!! Form::label('content','Content',['class'=>'col-md-2 col-form-label text-md-right']) !!}
 
-    <div class="col-md-6">
+    <div class="col-md-10">
         {!! Form::textarea('content',null,['class'=>'form-control']) !!}
 
         @if ($errors->has('content'))
@@ -25,9 +25,9 @@
 </div>
 
 <div class="form-group row">
-    {!! Form::label('tags','Tags',['class'=>'col-md-4 col-form-label text-md-right']) !!}
+    {!! Form::label('tags','Tags',['class'=>'col-md-2 col-form-label text-md-right']) !!}
 
-    <div class="col-md-6">
+    <div class="col-md-10">
         {!! Form::text('tags',null,['class'=>'form-control']) !!}
 
         @if ($errors->has('tags'))

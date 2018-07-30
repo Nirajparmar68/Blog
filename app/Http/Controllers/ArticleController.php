@@ -11,7 +11,7 @@ class ArticleController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
+        $this->middleware('auth');
     }
 
     /**
@@ -22,7 +22,6 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Auth::user()->articles;
-//        $articles = Article::all();
         return view('article.view', compact('articles'));
     }
 
@@ -52,12 +51,6 @@ class ArticleController extends Controller
         ]);
 
         Auth::user()->articles()->create($request->all());
-//        Article::create($request->all());
-//        $article = new Article();
-//        $article->title = $request->get('title');
-//        $article->user_id = Auth::user()->id;
-//        $article->content = $request->get('content');
-//        $article->save();
         return redirect('articles');
     }
 
@@ -112,6 +105,11 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $article = Auth::user()->articles()->findOrFail($id)->delete();
+            return response('Success');
+        }catch(\Exception $e){
+            return response('Oops!',401);
+        }
     }
 }
