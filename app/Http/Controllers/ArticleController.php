@@ -2,17 +2,116 @@
 
 namespace App\Http\Controllers;
 
+use App\Article;
+use Auth;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-    public function view()
+
+    public function __construct()
     {
-        return "view Article";
+        $this->middleware('auth')->except('index');
     }
 
-    public function post(Request $r)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        return $r;
+        $articles = Auth::user()->articles;
+//        $articles = Article::all();
+        return view('article.view', compact('articles'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('article.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'content' => 'required|min:50'
+        ], [
+            'title.required' => 'This field is required.'
+        ]);
+
+        Auth::user()->articles()->create($request->all());
+//        Article::create($request->all());
+//        $article = new Article();
+//        $article->title = $request->get('title');
+//        $article->user_id = Auth::user()->id;
+//        $article->content = $request->get('content');
+//        $article->save();
+        return redirect('articles');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $article = Auth::user()->articles()->findOrFail($id);
+        return view('article.edit', compact('article'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'content' => 'required|min:50'
+        ], [
+            'title.required' => 'This field is required.'
+        ]);
+        $article = Auth::user()->articles()->findOrFail($id);
+        $article->update($request->all());
+        return redirect('articles');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }

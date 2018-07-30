@@ -11,17 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('test', 'TestController@test');
 
-Route::get('/add', function () {
-    return view('addArticle');
-});
-
-Route::post('/post', 'ArticleController@post')->name('postArticle');
-
-Route::get('/view', 'ArticleController@view');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('articles','ArticleController');
+//Route::get('articles', 'ArticleController@index');
+//Route::get('articles/create', 'ArticleController@create');
+//Route::post('articles', 'ArticleController@store');
+//Route::get('articles/{id}/edit', 'ArticleController@edit');
+//Route::patch('articles/{id}','ArticleController@update');
